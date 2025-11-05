@@ -1,0 +1,2 @@
+N,rho*,dt,rc,rskin,steps,sample_stride,D_mean,D_SEM
+216,0.8,0.005,2.5,0.3,2000,10,0.05272639571231719,nan
