@@ -1,0 +1,168 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ }
+
+
+
+ \usepackage{graphicx}
+ \usepackage{titling}
+ \setlength{\droptitle}{-4.5cm}
+ \usepackage{amsmath} % Added for \text{} command
+ \usepackage{parskip}
+
+ \title{Molecular Simulation to Determine Transport Properties
+}
+\author{Student number: 229067703}
+\date{December 2025}
+ 
+ \usepackage{fancyhdr}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyhf{} % clear all header and footer fields
+    \fancyfoot[R]{\includegraphics[width=2cm]{bathlogo.png}}
+    \fancyfoot[C]{\thepage}
+    \fancyfoot[L]{\thedate}
+    \fancyhead[L]{CE40248}
+    \fancyhead[R]{\theauthor}
+}
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \vspace*{0pt} % <-- USE THIS instead of \null
+  % \null      % <-- This was the problem, it adds \topskip
+  {\centering  %
+  \let \footnote \thanks
+    {\LARGE \@title \par}%
+  \par
+  } %
+  \vskip 1em} % This is the space *after* the title, which is fine
+
+\makeatother
+\usepackage{lipsum}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault} % Makes sans serif the default font 
+\usepackage[round]{natbib}
+
+
+\begin{document}
+\pagestyle{plain}
+% \maketitle
+%\noindent\begin{tabular}{@{}ll}
+ %   Student: & Alexander Pooley\\
+  %    Supervisors: & Carmelo Herdes
+% \end{tabular}
+% --- MANUAL TITLE BLOCK (REPLACES \maketitle) ---
+\begin{center}
+% Negative space to pull the content up closer to the header
+
+    % Set large, bold font for the main title
+\fontsize{14}\selectfont 
+\textbf{Coarse-Grain Molecular Modelling of Water/Propylene Oxide to Determine Transport Properties}
+\end{center}
+
+
+\subsection*{Property}
+Diffusivity (\( D \)) is chosen as the transport property calculated to inform the reactor model. Pure water, pure propylene oxide, and the water - propylene oxide system are considered. Diffusivity is described as 
+
+
+\subsection*{Method}
+As diffusivity is a transport property, a molecular dynamics approach is taken. In order to mimic the complex binary system, two approaches were considered: a coarse grain model or an all-atom model. All-atom approaches consider each atom that makes up the molecule, giving rise to many different factors such as conformational changes and specific packing orientations, which lead to higher computational costs \citep{yu_2021_molecular}. The SAFT$\gamma$-Mie coarse grain approach is adopted in this design. The SAFT$\gamma$-Mie approach applies a top-down model in which potential parameters are adjusted to ensure the model matches experimental thermophysical data \citep{herdes_2015_coarse}. Statistical associating fluid theory (SAFT)  is used to estimate the exponent parameters (lambda r and lambda a) of the Mie force field. Molecules considered in this study are water and propylene oxide. Water is modelled as a single segment (m = 1) \citep{herdes_2015_coarse}. Propylene oxide is however modelled as 2 homonuclear beads due to the number of atoms being above 3 and below 6 (excluding hydrogens), the force field parameters were obtained using the correlation in \citep{herdes_2015_coarse}, as implemented in the \textit{Bottled SAFT} application \citep{Ervik2016BottledSAFT}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{balls.png} % adjust width as needed
+    \caption{Segments for each species.}
+    \label{fig:example}
+\end{figure}
+
+The parameters used are seen in appendix 1.3 in table []. The Mie equation gives us potential energy due to intermolecular forces and can be negatively differentiated to provide the force equation as a function of intermolecular radius. The Mie equation is seen below in appendix 1.4 in equations 1 \citep{herdes_2015_coarse}.          
+
+\subsection*{Justification}
+
+
+
+
+
+
+\newpage
+\section*{Appendix}
+
+\subsection*{1.1 Accuracy and Literature Comparison}
+This task covers the Property (5\%) and parts of the Method (10\%) and Discussion (5\%) marks.
+
+\begin{table}[h!]
+\centering
+\caption{Comparison of literature and calculated diffusivity values.}
+\vspace{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Mixture} & \textbf{T (K)} & \textbf{D$_\text{lit}$(m$^{2}$/s)} & \textbf{D$_\text{calc}$(m$^{2}$/s)} & \textbf{Ref} \\
+\hline
+Pure water & 298 & 2.9 &  & \citep{} \\
+          & 313 &  &  & \citep{} \\
+          & 330 &  &  & \citep{} \\
+\hline
+Pure propylene oxide & 298 &  &  & \citep{} \\
+          & 313 &  &  & \citep{} \\
+          & 330 &  &  & \citep{} \\
+\hline
+Reactor inlet & 298 &  &  & \citep{} \\
+          & 313 &  &  & \citep{} \\
+          & 330 &  &  & \citep{} \\
+\hline
+\end{tabular}
+\label{tab:diffusivity-comparison}
+\end{table}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{output.png} % adjust width as needed
+    \caption{Diffusivity at different temepratures.}
+    \label{fig:example}
+\end{figure}
+
+\subsection*{1.2 Generalisation and Discussion}
+
+\textbf{What to do:} We will select Diffusivity ($D$).
+
+\noindent we wll
+
+\subsection*{1.3 Parameters Used}
+
+\begin{table}[h!]
+\centering
+\caption{SAFT-$\gamma$ Mie parameters for water and propylene oxide used in this study.}
+\vspace{6pt}
+\label{tab:mie_parameters}
+\setlength{\tabcolsep}{6pt} % horizontal spacing
+\begin{tabular}{lcccccc}
+\hline
+\textbf{Species} & \textbf{$m$} & \textbf{$\sigma$ (m)} & \textbf{$\epsilon$ (J)} & \textbf{$\lambda_r$} & \textbf{$\lambda_a$} & \textbf{Ref} \\
+\hline
+Water            &           &           &          &          &          & \citep{} \\
+Propylene oxide  &           &           &          &          &          & \citep{} \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\subsection*{1.4 Equations Used}
+
+\begin{equation}
+U(r) = C \epsilon \left[ \left(\frac{\sigma}{r}\right)^{\lambda_r} - \left(\frac{\sigma}{r}\right)^6 \right] \text{ Where }C = \left( \frac{\lambda_r}{\lambda_r - 6} \right) \left( \frac{\lambda_r}{6} \right)^{\left(\frac{6}{\lambda_r - 6}\right)}
+\end{equation}
+
+\newpage
+\bibliographystyle{plainnat} 
+\bibliography{Molecular_Modelling} % Use the name of your .bib file WITHOUT the .bib extension
+
+\end{document}
